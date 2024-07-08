@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserService
+class AuthService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -27,9 +27,9 @@ class UserService
      */
     public function createUser(CreateUserDTO $DTO): Users
     {
-        $user = $this->entityManager->getRepository(Users::class)->findOneBy(['name' => $DTO->getName()]);
+        $userRepo = $this->entityManager->getRepository(Users::class);
 
-        if ($user) {
+        if ((null !== $userRepo->findOneBy(['name' => $DTO->getName()])) || (null !== $userRepo->findOneBy(['email' => $DTO->getEmail()]))) {
             throw new DuplicateException();
         }
         $token = mt_rand(100000, 999999);
@@ -62,7 +62,8 @@ class UserService
         }
         $user
             ->setVerify(true)
-            ->setToken(null);
+            ->setToken(null)
+            ->setRole(Users::ROLE_USER);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

@@ -42,6 +42,7 @@ final class Version20240703093845 extends AbstractMigration
             password VARCHAR(255) NOT NULL, 
             verify BOOLEAN NOT NULL default false, 
             token INT DEFAULT NULL, 
+            role VARCHAR(255),
             created_at TIMESTAMP not null default current_timestamp, 
             updated_at TIMESTAMP not null default current_timestamp, 
             PRIMARY KEY(id))');

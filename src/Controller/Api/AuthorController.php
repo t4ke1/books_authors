@@ -16,7 +16,7 @@ class AuthorController extends AbstractController
     ) {
     }
 
-    #[Route('/api/get-authors', name: 'api_author_get', methods: ['GET'])]
+    #[Route('/api/get-author-list', name: 'api_author_get', methods: ['GET'])]
     public function getAuthors(): JsonResponse
     {
         $authors = $this->authorService->getAuthorList();

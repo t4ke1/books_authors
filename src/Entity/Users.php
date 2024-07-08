@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\HasLifecycleCallbacks]
 class Users implements PasswordAuthenticatedUserInterface, UserInterface
 {
+    public const ROLE_USER = 'ROLE_USER';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true, nullable: false)]
@@ -28,7 +29,8 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface
     private bool $verify = false;
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $token = null;
-
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $role;
     #[ORM\Column(type: 'datetime', nullable: false)]
     private \DateTime $createdAt;
     #[ORM\Column(type: 'datetime', nullable: false)]
@@ -136,6 +138,32 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return [$this->role];
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->name;
+    }
+
     #[ORM\PreFlush]
     public function preFlush(): void
     {
@@ -143,20 +171,5 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface
             $this->createdAt = new \DateTime();
         }
         $this->updatedAt = new \DateTime();
-    }
-
-    public function getRoles(): array
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function eraseCredentials()
-    {
-
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->name;
     }
 }

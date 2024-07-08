@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class BookController extends AbstractController
 {
     public function __construct(
-        private BookService $bookService
+        private readonly BookService $bookService
     ) {
     }
 
