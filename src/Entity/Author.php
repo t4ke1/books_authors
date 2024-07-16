@@ -92,6 +92,7 @@ class Author
         $this->books[] = $book;
         $bookCount = $this->getBookCount() + 1;
         $this->setBookCount($bookCount);
+
         return $this;
     }
 

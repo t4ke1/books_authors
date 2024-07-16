@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Author{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/author.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="containerAuthor">
+        <div class="list-group" id="authorList">
+            <header> Список авторов </header><br>
+            {% for author in authors %}
+                <button type="button" id="{{ author.id }}" class="list-group-item list-group-item-action">{{ author.name }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Инфорация об авторе</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="authorId" class="form-label">Id Автора</label>
+                                <input type="text" id="authorId" class="form-control" placeholder="id автора">
+                            </div>
+                            <div class="mb-3">
+                                <label for="authorName" class="form-label">Имя автора</label>
+                                <input type="text" id="authorName" class="form-control" placeholder="Имя автора">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookCount" class="form-label">Количество книг</label>
+                                <input type="text" id="bookCount" class="form-control" placeholder="Количество книг">
+                            </div>
+                            <div id="bookList" class="mb-3">
+                                <label for="bookList" class="form-label">Список книг</label>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="update" data-bs-toggle="modal">Изменить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Информация о книге</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="authorIdUpdate" class="form-label">Id Автора</label>
+                                <input type="text" id="authorIdUpdate" class="form-control" placeholder="id автора">
+                            </div>
+                        </fieldset>
+                            <div class="mb-3">
+                                <label for="authorNameUpdate" class="form-label">Имя автора</label>
+                                <input type="text" id="authorNameUpdate" class="form-control" placeholder="Имя автора">
+                            </div>
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="bookCountUpdate" class="form-label">Количество книг</label>
+                                <input type="text" id="bookCountUpdate" class="form-control" placeholder="Количество книг">
+                            </div>
+                            <div id="bookListUpdate" class="mb-3">
+                                <label for="bookListUpdate" class="form-label">Список книг</label>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="save">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+        <script src="{{ asset('js/Author.js') }}"></script>
+{% endblock %}

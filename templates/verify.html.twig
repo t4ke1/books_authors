@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Verify Email{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/verify.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="containerVerify">
+        <form id ="verify">
+            <div class="mb-3">
+                <label for="code" class="form-label">Введите проверочный код</label>
+                <input type="text" class="form-control" id="code" aria-describedby="code">
+            </div>
+            <button type="submit" id="send" class="btn btn-primary">Отправить</button>
+            <button type="submit" id="reSend" class="btn btn-primary">Код не пришел</button>
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/Verify.js') }}"></script>
+{% endblock %}

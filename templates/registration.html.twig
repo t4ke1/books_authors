@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Registration{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="containerReg">
+    <form id ="registration">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Имя пользователя</label>
+            <input type="text" class="form-control" id="Name" aria-describedby="Name">
+            <div id="Name" class="form-text">Придумйте имя пользователя.</div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Почта</label>
+            <input type="email" class="form-control" id="email">
+            <div id="Email" class="form-text">Введите вашу почту для подтверждения.</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password">
+            <div id="password" class="form-text">Пароль должен содержать 6 или больше символов.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Зарегестрироватся</button>
+    </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/Registration.js') }}"> </script>
+{% endblock %}

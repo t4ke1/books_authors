@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\UserDTO\CreateUserDTO;
+use App\DTO\UserDTO\ResentVerifyCodeDTO;
 use App\DTO\UserDTO\VerifyUserDTO;
 use App\Entity\Users;
 use App\Exception\BadRequestException;
@@ -64,6 +65,26 @@ class AuthService
             ->setVerify(true)
             ->setToken(null)
             ->setRole(Users::ROLE_USER);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user;
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws TransportExceptionInterface
+     */
+    public function resendVerifyCode(ResentVerifyCodeDTO $DTO): Users
+    {
+        $user = $this->entityManager->getRepository(Users::class)->findOneBy(['email' => $DTO->getEmail()]);
+        if (null === $user) {
+            throw new NotFoundException();
+        }
+        $token = mt_rand(100000, 999999);
+        $user
+            ->setToken($token);
+        $this->mailService->sendCode(MailService::SUBJECT_VERIFY_CODE, $DTO->getEmail(), $token);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

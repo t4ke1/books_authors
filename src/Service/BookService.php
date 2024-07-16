@@ -55,10 +55,10 @@ class BookService
         if ((null !== $DTO->getGenre()) && ($DTO->getGenre() !== $book->getGenre())) {
             $book->setGenre($DTO->getGenre());
         }
-        $this->bookRepository->updateAuthor($book, $DTO->getAuthor());
         if (!$this->bookRepository->duplicateBook($book->getName(), $DTO->getAuthor())) {
             throw new DuplicateException();
         }
+        $this->bookRepository->updateAuthor($book, $DTO->getAuthor());
         $this->entityManager->persist($book);
         $this->entityManager->flush();
 
@@ -74,10 +74,10 @@ class BookService
         if (null === $book) {
             throw new NotFoundException();
         }
+        $this->entityManager->remove($book);
         foreach ($book->getAuthor() as $author) {
             $book->removeAuthor($author);
         }
-        $this->entityManager->remove($book);
         $this->entityManager->flush();
 
         return true;

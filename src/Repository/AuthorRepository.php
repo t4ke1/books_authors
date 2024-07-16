@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Author;
-use App\Entity\Book;
-use App\Exception\NotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,5 +18,4 @@ class AuthorRepository extends ServiceEntityRepository
     ) {
         parent::__construct($registry, Author::class);
     }
-
 }

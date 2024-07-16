@@ -25,9 +25,10 @@ security:
     access_control:
             - { path: api/create-user, roles: PUBLIC_ACCESS }
             - { path: api/verify-user, roles: PUBLIC_ACCESS }
-            - { path: api/login_check, roles: PUBLIC_ACCESS }
             - { path: api/get-book-list, roles: PUBLIC_ACCESS }
             - { path: api/get-author-list, roles: PUBLIC_ACCESS }
+            - { path: api/login_check, roles: PUBLIC_ACCESS }
+            - { path: api/resent-verify-code, roles: PUBLIC_ACCESS }
             - { path: api/, roles: ROLE_USER }
 when@test:
     security:

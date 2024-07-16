@@ -16,10 +16,8 @@ php:
 fixtures:
 	docker compose exec php bash -c "php bin/console doctrine:fixtures:load"
 
-migrations:
-	docker compose exec php bash -c "php bin/console doctrine:fixtures:load"
+migrate:
+	docker compose exec php bash -c "php bin/console doctrine:migrations:migrate"
 
-AuthorClear:
-	    docker compose exec php bash -c "php bin/console DeleteAuthor"
 cs-fix:
 	 docker compose exec php bash -c "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"

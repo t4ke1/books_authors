@@ -1,0 +1,428 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book list{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/books.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="containerBook">
+        <div class="list-group" id="bookList">
+            <header>Название книг</header><br>
+            {% for book in books %}
+                <button type="button" id="{{ book.id }}" class="list-group-item list-group-item-action">{{ book.name }}</button>
+            {% endfor %}
+            <br>
+            <button type="button" class="btn btn-primary" id="addBookMain" data-bs-toggle="modal" data-bs-target="#addBookModal">
+                Добавить книгу
+            </button>
+            <div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить книгу</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="addBookName" class="form-label">Название книги</label>
+                                    <input type="text" id="addBookName" class="form-control" placeholder="Поле названия книги">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="addBookGenre" class="form-label">Жанр книги</label>
+                                    <input type="text" id="addBookGenre" class="form-control" placeholder="Поле жанра">
+                                </div>
+                                <div id="addBookAuthors" class="mb-3">
+                                    <label for="addBookAuthors" class="form-label">Авторы книги</label>
+                                    <input type="text" id="addBookAuthors" class="form-control" placeholder="Поле имени автора">
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="addAuthorMain">Добавить автора</button>
+                            <button type="button" id="addBook" class="btn btn-primary">Добавить книгу</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Информация о книге</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="bookId" class="form-label">Id книги</label>
+                                <input type="text" id="bookId" class="form-control" placeholder="тут id">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookName" class="form-label">Название книги</label>
+                                <input type="text" id="bookName" class="form-control" placeholder="тут какое-то название">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookGenre" class="form-label">Жанр книги</label>
+                                <input type="text" id="bookGenre" class="form-control" placeholder="тут какой-то жанр">
+                            </div>
+                            <div id="bookAuthors" class="mb-3">
+                                <label for="bookAuthor" class="form-label">Авторы книги</label>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="delete" class="btn btn-danger">Удалить</button>
+                    <button class="btn btn-primary" id="update" data-bs-toggle="modal">Изменить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Информация о книге</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="bookIdUpdate" class="form-label">Id книги</label>
+                                <input type="text" id="bookIdUpdate" class="form-control" placeholder="тут id">
+                            </div>
+                        </fieldset>
+                            <div class="mb-3">
+                                <label for="bookNameUpdate" class="form-label">Название книги</label>
+                                <input type="text" id="bookNameUpdate" class="form-control" placeholder="тут какое-то название">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookGenreUpdate" class="form-label">Жанр книги</label>
+                                <input type="text" id="bookGenreUpdate" class="form-control" placeholder="тут какой-то жанр">
+                            </div>
+                            <div id="bookAuthorsUpdate" class="mb-3">
+                                <label for="bookAuthorsUpdate" class="form-label">Авторы книги</label>
+                            </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="addAuthor">Добавить автора</button>
+                    <button class="btn btn-primary" id="save">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script >
+        function getJWTFromCookie() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'token') {
+                    return value;
+                }
+            }
+            return null;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Добавление нового автора в модальное окно добавления книги
+            document.getElementById('addAuthorMain').addEventListener('click', function() {
+                const addBookAuthors = document.getElementById('addBookAuthors');
+                const newAuthorDiv = document.createElement('div');
+                newAuthorDiv.className = 'input-group mb-1';
+
+                const newAuthorInput = document.createElement('input');
+                newAuthorInput.type = 'text';
+                newAuthorInput.className = 'form-control';
+                newAuthorInput.placeholder = 'Поле имени автора';
+
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'btn btn-danger';
+                removeButton.innerHTML = 'Удалить';
+                removeButton.addEventListener('click', function() {
+                    addBookAuthors.removeChild(newAuthorDiv);
+                });
+
+                newAuthorDiv.appendChild(newAuthorInput);
+                newAuthorDiv.appendChild(removeButton);
+
+                addBookAuthors.appendChild(newAuthorDiv);
+            });
+
+            document.getElementById('addBook').addEventListener('click', function() {
+                const bookName = document.getElementById('addBookName').value;
+                const bookGenre = document.getElementById('addBookGenre').value;
+                const authorInputs = document.querySelectorAll('#addBookAuthors input');
+                const authors = Array.from(authorInputs).map(input => input.value);
+
+                const newBook = {
+                    name: bookName,
+                    genre: bookGenre,
+                    author: authors
+                };
+                console.log(JSON.stringify(newBook));
+
+                fetch('/api/create-book', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${getJWTFromCookie()}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(newBook)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Book added successfully');
+                            location.reload();
+                        } else {
+                            switch (response.status) {
+                                case 400:
+                                    alert('Bad request');
+                                    break;
+                                case 401:
+                                    alert('Unauthorized, please login');
+                                    break;
+                                case 409:
+                                    alert('Book already exists');
+                                    break;
+                                default:
+                                    alert('Unknown error');
+                                    break;
+                            }
+                        }
+                    });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let buttons = document.querySelectorAll('.list-group-item');
+
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var id = button.id;
+                    fetch(`/api/get-book-info/${id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${getJWTFromCookie()}`,
+                            "Content-Type": "application/json"
+                        },
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                switch (response.status) {
+                                    case 404:
+                                        alert('Not found');
+                                        break;
+                                    case 400:
+                                        alert('Bad request');
+                                        break;
+                                    case 401:
+                                        alert('Unauthorized, please login');
+                                        break;
+                                    default:
+                                        alert('Unknown error');
+                                        break;
+                                }
+                                throw new Error('Network response was not ok. ' + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            const book = data.book;
+                            document.getElementById('bookId').value = book.id;
+                            document.getElementById('bookName').value = book.name;
+                            document.getElementById('bookGenre').value = book.genre;
+                            const bookAuthors = document.getElementById('bookAuthors');
+                            bookAuthors.innerHTML = '<label for="bookAuthor" class="form-label">Авторы книги</label>';
+                            book.author.forEach((author, index) => {
+                                const authorInput = document.createElement('input');
+                                authorInput.type = 'text';
+                                authorInput.className = 'form-control mb-1';
+                                authorInput.id = `bookAuthor${index}`;
+                                authorInput.placeholder = 'тут автор';
+                                authorInput.value = author;
+                                bookAuthors.appendChild(authorInput);
+                            });
+                            var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                            modal.show();
+
+                            const deleteButton = document.getElementById('delete');
+                            deleteButton.addEventListener('click', function() {
+                                var id = button.id;
+
+                                fetch(`/api/delete-book/${id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': `Bearer ${getJWTFromCookie()}`,
+                                        "Content-Type": "application/json"
+                                    },
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            alert('Book deleted successfully');
+                                            location.reload();
+                                        } else {
+                                            switch (response.status) {
+                                                case 404:
+                                                    alert('Not found');
+                                                    break;
+                                                case 400:
+                                                    alert('Bad request');
+                                                    break;
+                                                case 401:
+                                                    alert('Unauthorized, please login');
+                                                    break;
+                                                default:
+                                                    alert('Unknown error');
+                                                    break;
+                                            }
+                                        }
+                                    })
+                                modal.hide();
+                            });
+
+                            const updateButton = document.getElementById('update');
+                            updateButton.addEventListener('click', function() {
+                                console.log(book);
+                                document.getElementById('bookIdUpdate').value = book.id;
+                                document.getElementById('bookNameUpdate').value = book.name;
+                                document.getElementById('bookGenreUpdate').value = book.genre;
+                                const bookAuthors = document.getElementById('bookAuthorsUpdate');
+                                bookAuthors.innerHTML = '<label for="bookAuthorsUpdate" class="form-label">Авторы книги</label>';
+
+                                book.author.forEach((author, index) => {
+                                    const authorDiv = document.createElement('div');
+                                    authorDiv.className = 'input-group mb-1';
+
+                                    const authorInput = document.createElement('input');
+                                    authorInput.type = 'text';
+                                    authorInput.className = 'form-control';
+                                    authorInput.id = `bookAuthor${index}`;
+                                    authorInput.placeholder = 'тут автор';
+                                    authorInput.value = author;
+
+                                    authorDiv.appendChild(authorInput);
+
+                                    if (index !== 0) {
+                                        const removeButton = document.createElement('button');
+                                        removeButton.type = 'button';
+                                        removeButton.className = 'btn btn-danger';
+                                        removeButton.innerHTML = 'Удалить';
+                                        removeButton.addEventListener('click', function() {
+                                            bookAuthors.removeChild(authorDiv);
+                                        });
+                                        const inputGroupAppend = document.createElement('div');
+                                        inputGroupAppend.className = 'input-group-append';
+                                        inputGroupAppend.appendChild(removeButton);
+                                        authorDiv.appendChild(inputGroupAppend);
+                                    }
+                                    bookAuthors.appendChild(authorDiv);
+                                });
+
+                                var modal = new bootstrap.Modal(document.getElementById('updateModal'));
+                                modal.show();
+                                console.log('update show');
+
+                                const addAuthorButton = document.getElementById('addAuthor');
+                                addAuthorButton.addEventListener('click', function() {
+                                    console.log('add author');
+                                    const newAuthorDiv = document.createElement('div');
+                                    newAuthorDiv.className = 'input-group mb-1';
+
+                                    const newAuthorInput = document.createElement('input');
+                                    newAuthorInput.type = 'text';
+                                    newAuthorInput.className = 'form-control';
+                                    newAuthorInput.placeholder = 'тут автор';
+
+                                    newAuthorDiv.appendChild(newAuthorInput);
+
+                                    const removeButton = document.createElement('button');
+                                    removeButton.type = 'button';
+                                    removeButton.className = 'btn btn-danger';
+                                    removeButton.innerHTML = 'Удалить';
+                                    removeButton.addEventListener('click', function() {
+                                        bookAuthors.removeChild(newAuthorDiv);
+                                    });
+                                    const inputGroupAppend = document.createElement('div');
+                                    inputGroupAppend.className = 'input-group-append';
+                                    inputGroupAppend.appendChild(removeButton);
+                                    newAuthorDiv.appendChild(inputGroupAppend);
+
+                                    bookAuthors.appendChild(newAuthorDiv);
+                                });
+
+                                const saveButton = document.getElementById('save');
+                                saveButton.addEventListener('click', function() {
+                                    const bookIdUpdate = document.getElementById('bookIdUpdate').value;
+                                    const bookNameUpdate = document.getElementById('bookNameUpdate').value;
+                                    const bookGenreUpdate = document.getElementById('bookGenreUpdate').value;
+
+                                    const bookAuthorsUpdate = document.getElementById('bookAuthorsUpdate');
+                                    const authors = [];
+                                    bookAuthorsUpdate.querySelectorAll('input').forEach(input => {
+                                        if (input.value.trim() !== '') {
+                                            authors.push(input.value.trim());
+                                        }
+                                    });
+                                    const changeBook = {
+                                        id: bookIdUpdate,
+                                        name: bookNameUpdate,
+                                        genre: bookGenreUpdate,
+                                        author: authors
+                                    }
+                                    fetch(`/api/update-book`,
+                                        {
+                                            method: 'POST',
+                                            headers: {
+                                                'Authorization': `Bearer ${getJWTFromCookie()}`,
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify(changeBook)
+                                        })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                alert('book updated successfully');
+                                                location.reload();
+                                            } else {
+                                                switch (response.status) {
+                                                    case 404:
+                                                        alert('Not found');
+                                                        break;
+                                                    case 409:
+                                                        alert('Book already exists');
+                                                        break;
+                                                    case 400:
+                                                        alert('Bad request');
+                                                        break;
+                                                    default:
+                                                        alert('Unknown error');
+                                                        break;
+                                                }
+                                            }
+                                        })
+                                    modal.hide();
+                                });
+                            });
+                        });
+                });
+            });})
+    </script>
+{% endblock %}

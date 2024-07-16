@@ -2,41 +2,28 @@
 
 namespace App\EventListener;
 
-
 use App\Entity\Book;
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 
-class AuthorRemoveEventListener implements EventSubscriber
+class AuthorRemoveEventListener
 {
 
     public function __construct(
-        private EntityManagerInterface $entityManager
-    )
-    {
-
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
-    public function getSubscribedEvents(): array
+    public function preRemove(PreRemoveEventArgs $event): void
     {
-        return [
-            Events::preRemove,
-        ];
-    }   public function preRemove(LifecycleEventArgs $args): void
-{
-    $entity = $args->getObject();
-
-
-   if ($entity instanceof Book) {
-        $authors = $entity->getAuthor();
+        if (!$event->getObject() instanceof Book) {
+            return;
+        }
+        $authors = $event->getObject()->getAuthor();
         foreach ($authors as $author) {
-            if ($author->getBookCount() < 1) {
+            if ($author->getBookCount() <= 1) {
                 $this->entityManager->remove($author);
-                $this->entityManager->flush();
             }
         }
     }
-}
 }

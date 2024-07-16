@@ -4,7 +4,6 @@ namespace App\DTO\UserDTO;
 
 use App\DTO\ValueResolvedInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class CreateUserDTO implements ValueResolvedInterface
 {
@@ -18,11 +17,7 @@ class CreateUserDTO implements ValueResolvedInterface
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
-    #[Assert\Length(min: 10)]
-    #[PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_WEAK,
-        'message' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, one special character and length >=10.',
-    ])]
+    #[Assert\Length(min: 6)]
     private string $password;
 
     public function getName(): string

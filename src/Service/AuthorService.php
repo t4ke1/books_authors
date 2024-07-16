@@ -4,16 +4,13 @@ namespace App\Service;
 
 use App\DTO\AuthorDTO\UpdateAuthorDTO;
 use App\Entity\Author;
-use App\Entity\Book;
 use App\Exception\NotFoundException;
-use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AuthorService
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private AuthorRepository $authorRepository
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -36,7 +33,6 @@ class AuthorService
      */
     public function getAuthorInfo(int $id): array
     {
-
         $author = $this->entityManager->getRepository(Author::class)->findOneBy(['id' => $id]);
         if (null === $author) {
             throw new NotFoundException();
@@ -50,7 +46,7 @@ class AuthorService
             'id' => $author->getId(),
             'name' => $author->getName(),
             'bookCount' => $author->getBookCount(),
-            'books' => $books
+            'books' => $books,
         ];
     }
 

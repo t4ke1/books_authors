@@ -31,4 +31,4 @@ services:
 
     App\EventListener\AuthorRemoveEventListener:
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: preRemove }

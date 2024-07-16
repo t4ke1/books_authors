@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\DTO\UserDTO\CreateUserDTO;
+use App\DTO\UserDTO\ResentVerifyCodeDTO;
 use App\DTO\UserDTO\VerifyUserDTO;
 use App\Exception\BadRequestException;
 use App\Exception\DuplicateException;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AuthController extends AbstractController
 {
     public function __construct(
-        private AuthService $userService
+        private readonly AuthService $userService
     ) {
     }
 
@@ -42,5 +43,17 @@ class AuthController extends AbstractController
         $this->userService->verifyUser($DTO);
 
         return new JsonResponse(['success' => 'Your account has been verified'], 200);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws NotFoundException
+     */
+    #[Route('/api/resent-verify-code', name: 'api_user_resent_verify_code', methods: ['POST'])]
+    public function resentVerifyCode(ResentVerifyCodeDTO $DTO): JsonResponse
+    {
+        $this->userService->resendVerifyCode($DTO);
+
+        return new JsonResponse(['success' => 'Verify code has been sent'], 200);
     }
 }

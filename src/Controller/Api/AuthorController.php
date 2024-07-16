@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AuthorController extends AbstractController
 {
     public function __construct(
-        private AuthorService $authorService
+        private readonly AuthorService $authorService
     ) {
     }
 
@@ -30,9 +30,9 @@ class AuthorController extends AbstractController
     #[Route('/api/get-author/{id}', name: 'api_author_get_by_id', methods: ['GET'])]
     public function getAuthorInfo(int $id): JsonResponse
     {
-        $authorInfo = $this->authorService->getAuthorInfo($id);
+        $author = $this->authorService->getAuthorInfo($id);
 
-        return new JsonResponse(['authorInfo' => $authorInfo], 200);
+        return new JsonResponse(['author' => $author], 200);
     }
 
     /**

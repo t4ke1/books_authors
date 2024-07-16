@@ -37,5 +37,4 @@ class UpdateAuthorDTO implements ValueResolvedInterface
 
         return $this;
     }
-
 }

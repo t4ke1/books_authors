@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="containerLogin">
+        <form id ="login">
+            <div class="mb-3">
+                <label for="Name" class="form-label">Введите имя пользователя</label>
+                <input type="text" class="form-control" id="Name" aria-describedby="Name">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Введите ваш пароль</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/Login.js') }}"></script>
+{% endblock %}

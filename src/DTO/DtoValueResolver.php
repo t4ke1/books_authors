@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class DtoValueResolver implements ValueResolverInterface
 {
     public function __construct(
-        private ValidatorInterface $validator,
-        private SerializerInterface $serializer
+        private readonly ValidatorInterface $validator,
+        private readonly SerializerInterface $serializer
     ) {
     }
 

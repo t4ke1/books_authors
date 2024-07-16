@@ -33,7 +33,7 @@ class BookController extends AbstractController
      * @throws DuplicateException
      * @throws NotFoundException
      */
-    #[Route('/api/update-book', name: 'api_book_update', methods: ['PUT'])]
+    #[Route('/api/update-book', name: 'api_book_update', methods: ['POST'])]
     public function updateBook(UpdateBookDTO $DTO): JsonResponse
     {
         $book = $this->bookService->updateBook($DTO);
