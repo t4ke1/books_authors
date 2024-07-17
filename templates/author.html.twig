@@ -5,7 +5,25 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/author.css') }}">
 {% endblock %}
-
+{% block header %}
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Главная</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/book">Список книг</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/author">Список авторов</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/registration">Регистрация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/login">Вход</a>
+        </li>
+    </ul>
+{% endblock %}
 {% block content %}
     <div class="containerAuthor">
         <div class="list-group" id="authorList">
